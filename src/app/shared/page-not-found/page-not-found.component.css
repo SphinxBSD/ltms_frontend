@@ -1,0 +1,14 @@
+.not-found-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: var(--warn-color);
+  }
+  
+  .not-found-card {
+    padding: 20px;
+    max-width: 500px;
+  }
+  

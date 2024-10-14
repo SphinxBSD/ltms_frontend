@@ -1,0 +1,127 @@
+<div class="main-container">
+    <div class="header">
+        <h3><strong>LISTA DE USUARIOS</strong></h3>
+        <button mat-flat-button color="primary" routerLink="/admin/usuarios/registrar">
+            Registrar usuario
+            <mat-icon aria-label="Example home icon" fontIcon="person add icon"></mat-icon>
+        </button>
+    </div>
+    <div class="content">
+            @if (dataSource.data.length === 0) {
+              <div>
+                <mat-card class="user-message">
+                    No hay registros de usuarios en el sistema
+                </mat-card>
+              </div>
+            }@else {
+              <table mat-table [dataSource]="dataSource" class="tabla" multiTemplateDataRows>
+              
+                <ng-container matColumnDef="username" sticky>
+                  <th *matHeaderCellDef class="table-header">Username</th>
+                  <td mat-cell *matCellDef="let element">{{element.username}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                  <th *matHeaderCellDef class="table-header">Email</th>
+                  <td mat-cell *matCellDef="let element">{{element.email}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombres">
+                  <th *matHeaderCellDef class="table-header">Nombres</th>
+                  <td mat-cell *matCellDef="let element">{{element.nombres}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="paterno">
+                  <th *matHeaderCellDef class="table-header">Paterno</th>
+                  <td mat-cell *matCellDef="let element">{{element.paterno}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="materno">
+                  <th *matHeaderCellDef class="table-header">Materno</th>
+                  <td mat-cell *matCellDef="let element">{{element.materno}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="rol">
+                  <th *matHeaderCellDef class="table-header">Rol</th>
+                  <td mat-cell *matCellDef="let element">{{element.rol.slice(5,element.rol.length)}}</td>
+                </ng-container>
+              
+                <ng-container matColumnDef="expand">
+                  <th *matHeaderCellDef class="table-header" aria-label="row actions">Ver detalle</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                      @if (expandedElement === element) {
+                        <mat-icon>keyboard_arrow_up</mat-icon>
+                      } @else {
+                        <mat-icon>keyboard_arrow_down</mat-icon>
+                      }
+                    </button>
+                  </td>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                  <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <mat-card class="info-card">
+                          <h2>
+                            {{ element.nombres + ' '
+                             + element.paterno + ' '
+                             + element.materno}}</h2>
+                          <mat-divider></mat-divider>
+                          <div class="info-content">
+                            
+                            <div class="personal-info">
+                              
+                              <p><strong>Email:</strong> {{ element.email }}</p>
+                              <p><strong>Celular:</strong> {{ element.celular }}</p>
+                              <p><strong>Direccion:</strong> {{ element.direccion }}</p>
+                              
+                            </div>
+                            <div class="personal-info">
+                              <!-- <h2>{{ element.persona.nombres }}</h2> -->
+                              <p><strong>CI:</strong> {{ element.ci }}</p>
+                              <p><strong>Phone:</strong> {{ element.celular }}</p>
+                              <p><strong>Rol:</strong> {{ element.rol.slice(5,element.rol.length) }}</p>
+                            </div>
+                            <div class="profile-picture">
+                              <!-- <img [src]="user.profilePicture" alt="Profile picture of {{ user.name }}" /> -->
+                              @if (element.profileImage) {
+                                <img [src]="getImageSrc(element.profileImage)" alt="perfil foto">
+                              }@else {
+                                <img src="assets/images/nonImg.jpg" alt="perfil foto">
+                              }
+                            </div>
+                          </div>
+                        </mat-card>
+                      <div class="example-element-description">
+                        <button mat-flat-button color="primary" (click)="editUser(element)">Editar</button>
+                        <button mat-flat-button color="warn" (click)="removeUser(element.id)">Eliminar</button>
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                    class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                
+            </table>
+              <!-- Paginator -->
+  <mat-paginator
+  [length]="totalUsuarios"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onPaginateChange($event)"
+>
+</mat-paginator>
+            }
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<mat-drawer-container class="main-container" autosize="">
+    <mat-drawer #drawer class="main-left" mode="side">
+      <mat-nav-list>
+        <div mat-subheader>Administrar</div>
+
+        <div class="links">
+          <a class="nav-link" routerLink="/admin/usuarios">
+            <mat-icon matListItemIcon>supervisor_account</mat-icon>
+            Gestion de usuarios
+          </a>
+          <a class="nav-link" routerLink="/admin/conductores">
+            <mat-icon matListItemIcon>dataset</mat-icon>
+            Gestion de conductores
+          </a>
+          <a class="nav-link" routerLink="/admin/categories">
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            Gestion de unidades
+          </a>
+        </div>
+
+        <mat-divider></mat-divider>
+        <div div mat-subheader>Cuenta</div>
+        <div class="links">
+          <a class="nav-link" routerLink="/admin/users">
+            <mat-icon matListItemIcon>group</mat-icon>
+            Users
+          </a>
+          <a class="nav-link" >
+            <mat-icon matListItemIcon>logout</mat-icon>
+            Logout
+          </a>
+        </div>
+        
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar style="background-color: var(--background-color)">
+            <button mat-icon-button class="example-icon" aria-label="menu button" (click)="drawer.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+            <strong>Gestion logistica</strong>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>

@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('./assets/styles/nav-link.css');
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+    --primary-color: #023e8aff; /* Example primary color */
+    --accent-color: #14213dff;  /* Example accent color */
+    --warn-color: #fca311ff;    /* Example warn color */
+    --platinum: #e5e5e5ff;      /* Example platinum color */
+    --white-smoke: #f5f5f5ff;
+    --background-color: #ffffff;
+    --text-color1: #000000;
+    --text-color2: #ffffff;
+    --persimmon: #e85d04ff;
+  }
+  

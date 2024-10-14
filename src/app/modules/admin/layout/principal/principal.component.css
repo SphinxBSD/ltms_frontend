@@ -1,0 +1,23 @@
+.main-container {
+    width: auto;
+    height: 100%;
+    background: var(--white-smoke);
+  }
+
+.main-left {
+  display: flex;
+  flex-direction: column;
+  background: var(--primary-color);
+  color: var(--text-color2);
+}
+
+.rutas {
+  color: var(--text-color2);
+
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 20px;
+}

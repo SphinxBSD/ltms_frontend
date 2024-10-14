@@ -1,0 +1,72 @@
+.container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.left, .right {
+    flex: 1; /* Ambos divs ocuparán la mitad del espacio disponible */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.left {
+    
+    background: linear-gradient(90deg, #FDD086, #FDC872); /* Fondo general para backgrounds */
+}
+
+.left img {
+    max-width: 95%;  /* Asegura que la imagen no sea más ancha que el contenedor */
+    max-height: auto; /* Asegura que la imagen no sea más alta que el contenedor */
+    object-fit: contain; /* Asegura que la imagen se ajuste dentro del contenedor sin deformarse */
+}
+
+.right {
+    align-items: center;
+    background: var(--primary-color);
+}
+
+.form-card{
+    margin: 20px; /* Espacio alrededor de la tarjeta */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones */
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .inputSpace {
+    width: 100%;
+  }
+
+.card-title {
+    font-size: xx-large;
+    font-weight: bold;
+    color: #f08e0ef8;
+    margin-bottom: 2%;
+}
+
+.card-sub-title {
+    color: #5482c9;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .custom-card {
+        margin: 5%;
+    }
+
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+        .left, .right {
+        width: 100%;
+        height: auto;
+    }
+}

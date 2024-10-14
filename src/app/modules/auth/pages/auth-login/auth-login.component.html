@@ -1,0 +1,59 @@
+<div class="home">
+    <div class="container">
+      <div class="left">
+          <img class="logo" src="./assets/images/logoempresa.png" alt="Trucks Laurel Logo">
+      </div>
+      <div class="right">
+          <div>
+              <mat-card appearance="raised" class="custom-card">
+                <mat-card-content>
+                  <h2 class="card-title">Bienvenido!</h2>
+                  <p class="card-sub-title">Ingrese con su usuario asignado  en la empresa</p>
+                  <form class="loginForm"
+                  [formGroup]="userForm"
+                  (ngSubmit)="onSubmit()">
+                    <mat-form-field class="inputSpace">
+                      <mat-label>Nombre de usuario</mat-label>
+                      <input
+                      matInput 
+                      placeholder="Ingresar usuario"
+                      autocomplete="off"
+                      formControlName="username">
+                      <mat-error *ngIf="(userForm.get('username')?.touched && userForm.get('username')?.hasError('username'))">
+                          Por favor ingresar un usuario valido
+                      </mat-error>
+                      <mat-error *ngIf="(userForm.get('username')?.touched && userForm.get('username')?.hasError('required'))">
+                          El usuario es <strong>requerido</strong>
+                      </mat-error>
+                      
+                    </mat-form-field>
+      
+                    <mat-form-field class="inputSpace">
+                      <mat-label>Contraseña</mat-label>
+                      <input 
+                      matInput 
+                      [type]="hidePass ? 'password' : 'text'"
+                      placeholder="Ingresar contraseña" 
+                      formControlName="password">
+                      <button 
+                      mat-icon-button 
+                      matSuffix (click)="hidePass = !hidePass" 
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hidePass">
+                        <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
+                    </mat-form-field>
+        
+                    <button mat-flat-button color="primary">Iniciar sesion</button>
+                  </form>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button color="primary">Olvido su contraseña?</button>
+                </mat-card-actions>
+              </mat-card>
+          </div>        
+      </div>
+  </div>
+  <app-footer></app-footer>
+</div>
+  
