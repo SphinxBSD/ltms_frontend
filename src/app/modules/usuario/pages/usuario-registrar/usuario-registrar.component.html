@@ -93,12 +93,12 @@
                                     matInput 
                                     [matDatepicker]="picker"
                                     required
-                                    name="fechaNacimiento"
-                                    [(ngModel)]="usuario.persona.fechaNacimiento"
-                                    #fechaNacimiento="ngModel"
+                                    name="fechaNac"
+                                    [(ngModel)]="usuario.persona.fechaNac"
+                                    #fechaNac="ngModel"
                                     >
-                                    @if (fechaNacimiento.invalid && (fechaNacimiento.dirty || fechaNacimiento.touched)) {
-                                        <mat-error *ngIf="fechaNacimiento.errors!['required']">
+                                    @if (fechaNac.invalid && (fechaNac.dirty || fechaNac.touched)) {
+                                        <mat-error *ngIf="fechaNac.errors!['required']">
                                             El campo es requerido
                                         </mat-error>
                                     }

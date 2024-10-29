@@ -4,7 +4,7 @@ export class Persona {
     paterno!: string;
     materno!: string;
     ci!: number;
-    fechaNacimiento!: Date;
+    fechaNac!: Date;
     direccion!: string;
     celular!: Number;
     estado!: string;

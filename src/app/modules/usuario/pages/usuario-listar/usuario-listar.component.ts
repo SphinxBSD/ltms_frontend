@@ -52,7 +52,7 @@ import Swal from 'sweetalert2';
   styleUrl: './usuario-listar.component.css'
 })
 export class UsuarioListarComponent implements OnInit {
-  usuarios: Usuario[] = [];
+
   displayedColumns: string[] = ['username', 'nombres', 'paterno', 'materno', 'email', 'rol'];
   dataSource = new MatTableDataSource<UsuarioListarResponse>();
   totalUsuarios = 0;
@@ -134,7 +134,16 @@ export class UsuarioListarComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           // Proceed with user deletion
-          this.usuarios = this.usuarios.filter(usuario => usuario.id !== id);
+          this.usuarioService.deleteUser(id).subscribe({
+            next: (response) => {
+              Swal.fire("Exito", response, 'warning');
+              this.loadUsers(this.pageIndex, this.pageSize);
+            },
+            error: (err) => {
+              console.log(err);
+              Swal.fire('Error', 'Error al eliminar el usuario', 'error');
+            },
+          });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire(
             'Cancelado',
@@ -143,7 +152,40 @@ export class UsuarioListarComponent implements OnInit {
           );
         }
       });
-    
+  }
+
+  disableUser(id: number): void {
+    console.log('Eliminando usuario');
+      Swal.fire({
+        title: 'Deshabilitar usuario',
+        text: '¿Está seguro de deshabilitar este usuario?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, deshabilitar!',
+        cancelButtonText: 'No, Cancelar!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Proceed with user deletion
+          this.usuarioService.disableUser(id).subscribe({
+            next: (response) => {
+              Swal.fire("Exito", response, 'warning');
+              this.loadUsers(this.pageIndex, this.pageSize);
+            },
+            error: (err) => {
+              console.log(err);
+              Swal.fire('Error', 'Error al deshabilitar el usuario', 'error');
+            },
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire(
+            'Cancelado',
+            'El usuario no fue deshabilitado :)',
+            'error'
+          );
+        }
+      });
   }
 
 

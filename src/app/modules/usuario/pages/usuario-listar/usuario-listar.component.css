@@ -96,3 +96,9 @@
     border-radius: 50%;
     object-fit: cover;
   }
+
+  .btn-opciones {
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5em 0;
+  }

@@ -30,4 +30,9 @@ export class AuthService {
             tap(response => this.tokenService.setToken(response.token))
         );
   }
+
+  logout() {
+    this.tokenService.removeToken();
+    this.authState.next(null);
+  }
 }

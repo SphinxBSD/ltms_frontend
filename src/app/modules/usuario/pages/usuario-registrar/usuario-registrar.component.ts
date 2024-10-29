@@ -53,7 +53,7 @@ export class UsuarioRegistrarComponent {
       paterno: '',
       materno: '',
       ci: 0,
-      fechaNacimiento: '',
+      fechaNac: '',
       direccion: '',
       celular: '',
       estado: '',
@@ -68,12 +68,12 @@ export class UsuarioRegistrarComponent {
 
   onSubmit(userForm: NgForm): void {
     // Format the selected date before sending it to the backend
-    const formattedDate = moment.default(userForm.value.fechaNacimiento).format('YYYY-MM-DD');
+    const formattedDate = moment.default(userForm.value.fechaNac).format('YYYY-MM-DD');
     console.log(formattedDate);
     if (userForm.valid || this.selectedFile) {
       // console.log('Enviando datos');
       this.usuarioRegistroRequest = userForm.value;
-      this.usuarioRegistroRequest.fechaNacimiento = formattedDate;
+      this.usuarioRegistroRequest.fechaNac = formattedDate;
       // console.log(this.usuarioRegistroRequest);
       if (this.selectedFile) {
         this.usuarioService.registrarUsuario(this.usuarioRegistroRequest, this.selectedFile).subscribe({

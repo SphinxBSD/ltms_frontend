@@ -9,7 +9,7 @@ export interface usuarioRegistroRequest {
     paterno: string;
     materno: string;
     ci: number;
-    fechaNacimiento: string;
+    fechaNac: string;
     direccion: string;
     celular: string;
     estado: string;

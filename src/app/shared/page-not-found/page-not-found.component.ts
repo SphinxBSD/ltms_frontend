@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-not-found',
@@ -12,4 +13,9 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class PageNotFoundComponent {
 
+  constructor(private router: Router) { }
+
+  redirectTo(): void {
+    this.router.navigate(['/']);
+  }
 }

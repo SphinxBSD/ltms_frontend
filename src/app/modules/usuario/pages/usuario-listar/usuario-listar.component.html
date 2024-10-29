@@ -95,9 +95,10 @@
                             </div>
                           </div>
                         </mat-card>
-                      <div class="example-element-description">
-                        <button mat-flat-button color="primary" (click)="editUser(element)">Editar</button>
-                        <button mat-flat-button color="warn" (click)="removeUser(element.id)">Eliminar</button>
+                      <div class="btn-opciones">
+                        <!-- <button mat-flat-button color="primary" (click)="editUser(element)">Editar</button> -->
+                        <button mat-flat-button color="accent" (click)="disableUser(element.idUsuario)">Deshabilitar</button>
+                        <button mat-flat-button color="warn" (click)="removeUser(element.idUsuario)">Eliminar</button>
                       </div>
                     </div>
                   </td>

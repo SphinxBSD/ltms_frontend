@@ -21,11 +21,11 @@
         <mat-divider></mat-divider>
         <div div mat-subheader>Cuenta</div>
         <div class="links">
-          <a class="nav-link" routerLink="/admin/users">
-            <mat-icon matListItemIcon>group</mat-icon>
-            Users
+          <a class="nav-link" routerLink="/admin/usuarios/editar">
+            <mat-icon matListItemIcon>person</mat-icon>
+            Mi perfil
           </a>
-          <a class="nav-link" >
+          <a class="nav-link" (click)="logout()">
             <mat-icon matListItemIcon>logout</mat-icon>
             Logout
           </a>

@@ -1,5 +1,6 @@
 export interface UsuarioListarResponse {
     //Datos de usuario
+    idUsuario: number;
     username: string;
     email: string;
     rol: string;
@@ -8,7 +9,7 @@ export interface UsuarioListarResponse {
     paterno: string;
     materno: string;
     ci: number;
-    fechaNacimiento: string;
+    fechaNac: string;
     direccion: string;
     celular: string;
     estado: string;
