@@ -1,0 +1,98 @@
+<div class="main-container">
+    <div class="header">
+        <h3><strong>LISTA DE CONDUCTORES</strong></h3>
+        <button mat-flat-button color="primary" routerLink="/admin/conductores/registrar">
+            Registrar conductor
+            <mat-icon aria-label="Example home icon" fontIcon="person add icon"></mat-icon>
+        </button>
+    </div>
+    <div class="content">
+        <!-- conductor-table.component.html -->
+        <div class="table-container">
+            <mat-form-field appearance="fill">
+            <mat-label>Buscar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre">
+            </mat-form-field>
+        
+            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+            <!-- Nombres completo Column -->
+            <ng-container  matColumnDef="nombres">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Nombres</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.nombres }}</td>
+            </ng-container>
+
+            <!-- Paterno Column -->
+            <ng-container  matColumnDef="paterno">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Paterno</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.paterno }}</td>
+            </ng-container>
+
+            <!-- Materno Column -->
+            <ng-container  matColumnDef="materno">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Materno</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.materno }}</td>
+            </ng-container>
+        
+            <!-- carnet de identidad Column -->
+            <ng-container matColumnDef="ci">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>CI</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.ci }}</td>
+            </ng-container>
+        
+            <!-- Licencia Column -->
+            <ng-container matColumnDef="licencia">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Licencia</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.licencia }}</td>
+            </ng-container>
+        
+            <!-- Celular Column -->
+            <ng-container matColumnDef="celular">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Celular</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.celular }}</td>
+            </ng-container>
+        
+            <!-- Direccion Column -->
+            <!-- <ng-container matColumnDef="direccion">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Direccion</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.direccion }}</td>
+            </ng-container> -->
+        
+            <!-- Fecha Contrato Column -->
+            <ng-container matColumnDef="fechaContrato">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Fecha de Contrato</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.fechaContrato | date }}</td>
+            </ng-container>
+        
+            <!-- Estado Column -->
+            <ng-container matColumnDef="estado">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Estado</th>
+                <td mat-cell *matCellDef="let conductor">{{ conductor.estado }}</td>
+            </ng-container>
+
+            <!-- Acciones Column -->
+             <ng-container matColumnDef="acciones">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Acciones</th>
+                <td mat-cell *matCellDef="let conductor">
+                    <button mat-stroked-button color="primary" (click)="verInfoConductor(conductor.idConductor)">
+                        Ver info
+                        <mat-icon aria-label="Information icon" fontIcon="info icon"></mat-icon>
+                    </button>
+                    <button mat-flat-button color="warn" routerLink="/admin/conductores/informacion">
+                        Eliminar
+                        <mat-icon aria-label="Information icon" fontIcon="delete icon"></mat-icon>
+                    </button>
+                </td>
+             </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        
+            <mat-paginator [length]="totalElements"
+                        [pageSize]="5"
+                        [pageSizeOptions]="[5, 10, 20, 50]"
+                        (page)="onPaginateChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

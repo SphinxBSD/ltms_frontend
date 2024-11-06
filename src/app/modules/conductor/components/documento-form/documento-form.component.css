@@ -1,0 +1,28 @@
+.file-input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .file-input-container label {
+    margin-right: 16px;
+    min-width: 100px;
+  }
+  
+  .file-input-container button {
+    margin-right: 16px;
+  }
+  
+  .file-input-container span {
+    font-style: italic;
+  }
+
+  .titulo-form{
+    background: var(--primary-color);
+    color: var(--warn-color);
+  }
+
+  .fields-form {
+    width: 100%;
+  }
+  

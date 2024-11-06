@@ -1,0 +1,16 @@
+<div class="profile-image-upload">
+    <img *ngIf="imagePreview" [src]="imagePreview" alt="Vista previa de la imagen de perfil" class="profile-image">
+    
+    <input 
+    type="file" 
+    accept=".jpg,.png,.jpeg" 
+    (change)="onFileSelected($event)" 
+    hidden
+    required
+    #fileInput>
+    
+    <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">
+    <mat-icon>upload</mat-icon> Subir Imagen
+    </button>
+    
+</div>

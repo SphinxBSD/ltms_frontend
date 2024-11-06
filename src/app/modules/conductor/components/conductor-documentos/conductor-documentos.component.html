@@ -1,0 +1,63 @@
+<!-- document-list.component.html -->
+<div class="document-list">
+    <h2>Documentos del Conductor</h2>
+    <button mat-raised-button color="primary" (click)="openCreateDialog()">
+      Nuevo Documento
+    </button>
+    <br>
+    <br>
+    <table mat-table [dataSource]="documents" class="mat-elevation-z8">
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let doc"> {{ doc.idDocumento }} </td>
+      </ng-container>
+  
+      <!-- Tipo Documento Column -->
+      <ng-container matColumnDef="tipoDocumento">
+        <th mat-header-cell *matHeaderCellDef> Tipo Documento </th>
+        <td mat-cell *matCellDef="let doc"> {{ getTipoDocumentoNombre(doc.idDocumentoTipo) }} </td>
+      </ng-container>
+
+      <!-- Descripcion Documento Column -->
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+        <td mat-cell *matCellDef="let doc"> {{ getTipoDocumentoDescripcion(doc.idDocumentoTipo) }} </td>
+      </ng-container>
+  
+      <!-- Fecha Vencimiento Column -->
+      <ng-container matColumnDef="fechaVencimiento">
+        <th mat-header-cell *matHeaderCellDef> Fecha Vencimiento </th>
+        <td mat-cell *matCellDef="let doc"> {{ doc.fechaVencimiento | date }} </td>
+      </ng-container>
+  
+      <!-- Estado Column -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let doc"> {{ doc.estadoDocumento }} </td>
+      </ng-container>
+  
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let doc">
+          <button mat-icon-button color="primary" (click)="downloadDocument(doc)">
+            <mat-icon>cloud_download</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="openEditDialog(doc)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteDocument(doc.idDocumento)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <!-- Header and Row Declarations -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+    </table>
+  </div>
+  

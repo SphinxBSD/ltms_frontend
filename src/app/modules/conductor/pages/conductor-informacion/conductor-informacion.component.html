@@ -1,13 +1,24 @@
 <div class="main-container">
     <div class="header">
-        <h3><strong>REGISTRAR USUARIO</strong></h3>
-        <button mat-flat-button color="warn" routerLink="/admin/usuarios/">
-            Regresar
-            <mat-icon aria-label="icono de retorno" fontIcon="keyboard_return icon"></mat-icon>
-        </button>
+        <h3><strong>INFORMACION DEL CONDUCTOR</strong></h3>
+        <div>
+            <button mat-raised-button color="primary" type="button" (click)="mostrarDocumentos()">
+                {{showDocs ? 'Ocultar' : 'Ver Documentos'}}
+                <mat-icon aria-label="icono de ver documentos" fontIcon="folder_shared icon"></mat-icon>
+            </button>
+            <button mat-raised-button color="warn" routerLink="/admin/conductores/">
+                Regresar
+                <mat-icon aria-label="icono de retorno" fontIcon="keyboard_return icon"></mat-icon>
+            </button>
+        </div>
+        
+        <!-- <button mat-flat-button color="accent" type="button" (click)="mostrarActualizarPassword()">
+            {{mostrarForm ? 'Ocultar' : 'Actualizar contraseña'}}
+            <mat-icon aria-label="icono de retorno" fontIcon="receipt"></mat-icon>
+        </button> -->
     </div>
     <div class="content">
-        <form (ngSubmit)="onSubmit(userForm)" class="registrar-form" autocomplete="off" #userForm="ngForm">
+        <form (ngSubmit)="onSubmit(conductorForm)" class="registrar-form" autocomplete="off" #conductorForm="ngForm">
             <div class="datos-form">
                 <div class="datos-personales">
                     <h3 class="sub-title"><strong>Datos personales:</strong></h3>
@@ -17,11 +28,12 @@
                                 <td>
                                     <mat-form-field>
                                     <mat-label>Nombres</mat-label>
-                                    <input 
+                                    <input
+                                    [readonly]="!isEditar" 
                                     matInput
                                     required
                                     name="nombres"
-                                    [(ngModel)]="usuario.persona.nombres"
+                                    [(ngModel)]="conductor.nombres"
                                     #nombres="ngModel">
                                     @if (nombres.invalid && (nombres.dirty || nombres.touched)) {
                                         <mat-error *ngIf="nombres.errors!['required']">
@@ -34,10 +46,11 @@
                                     <mat-form-field>
                                     <mat-label>Apellido paterno</mat-label>
                                     <input 
+                                    [readonly]="!isEditar"
                                     matInput 
                                     required
                                     name="paterno"
-                                    [(ngModel)]="usuario.persona.paterno"
+                                    [(ngModel)]="conductor.paterno"
                                     #paterno="ngModel">
                                     @if (paterno.invalid && (paterno.dirty || paterno.touched)) {
                                         <mat-error *ngIf="paterno.errors!['required']">
@@ -50,10 +63,11 @@
                                     <mat-form-field>
                                     <mat-label>Apellido materno</mat-label>
                                     <input 
+                                    [readonly]="!isEditar"
                                     matInput
                                     required
                                     name="materno"
-                                    [(ngModel)]="usuario.persona.materno"
+                                    [(ngModel)]="conductor.materno"
                                     #materno="ngModel">
                                     @if (materno.invalid && (materno.dirty || materno.touched)) {
                                         <mat-error *ngIf="materno.errors!['required']">
@@ -68,10 +82,11 @@
                                     <mat-form-field>
                                     <mat-label>Cedula de identidad</mat-label>
                                     <input 
+                                    [readonly]="!isEditar"
                                     matInput 
                                     required
                                     name="ci"
-                                    [(ngModel)]="usuario.persona.ci"
+                                    [(ngModel)]="conductor.ci"
                                     #ci="ngModel"
                                     pattern="[0-9]*">
                                     @if (ci.invalid && (ci.dirty || ci.touched)) {
@@ -90,11 +105,12 @@
                                     <mat-form-field style="width: 90%; margin-left: 5%;">
                                     <mat-label>Elija una fecha</mat-label>
                                     <input 
+                                    [readonly]="!isEditar"
                                     matInput 
                                     [matDatepicker]="picker"
                                     required
                                     name="fechaNac"
-                                    [(ngModel)]="usuario.persona.fechaNac"
+                                    [(ngModel)]="conductor.fechaNac"
                                     #fechaNac="ngModel"
                                     >
                                     @if (fechaNac.invalid && (fechaNac.dirty || fechaNac.touched)) {
@@ -103,7 +119,7 @@
                                         </mat-error>
                                     }
                                     <mat-hint>MM/DD/YYYY</mat-hint>
-                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker-toggle [disabled]="!isEditar" matIconSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
                                     </mat-form-field>
                                 </td>
@@ -111,13 +127,14 @@
                                     <mat-form-field class="example-full-width">
                                     <mat-label>Nro Celular</mat-label>
                                     <input 
+                                    [readonly]="!isEditar"
                                     type="tel"
                                     matInput 
                                     required 
                                     name="celular"
-                                    [(ngModel)]="usuario.persona.celular"
+                                    [(ngModel)]="conductor.celular"
                                     #celular="ngModel"
-                                    pattern="[0-9]*">
+                                    pattern="[0-9\+\-]*">
                                     @if (celular.invalid && (celular.dirty || celular.touched)) {
                                         <mat-error *ngIf="celular.errors!['required']">
                                             El campo es requerido
@@ -135,10 +152,11 @@
                                 <mat-form-field class="direccion-field" style="width: 90%;">
                                     <mat-label>Direccion</mat-label>
                                     <textarea 
+                                        [readonly]="!isEditar"
                                         matInput 
                                         placeholder="Ex. 100 Main St"
                                         name="direccion"
-                                        [(ngModel)]="usuario.persona.direccion"
+                                        [(ngModel)]="conductor.direccion"
                                         #direccion="ngModel"
                                         required>
                                     </textarea>
@@ -155,68 +173,99 @@
                         </table>
                     </div>
                 </div>
-                <div class="datos-usuario">
-                    <h3 class="sub-title"><strong>Datos de usuario:</strong></h3>
+                <div class="datos-conductor">
+                    <h3 class="sub-title"><strong>Datos de conductor:</strong></h3>
                     <div>
                         <table cellspacing="5">
                             <tr class="row-form">
                                 <td class="column-form">
                                     <mat-form-field>
-                                    <mat-label>Nombre de usuario</mat-label>
+                                    <mat-label>Numero de Licencia</mat-label>
                                     <input 
+                                    [readonly]="!isEditar"
                                     matInput 
                                     required
-                                    name="username"
-                                    [(ngModel)]="usuario.username"
-                                    #username="ngModel"
-                                    [minlength]="6">
-                                    @if (username.invalid && (username.dirty || username.touched)) {
-                                        <mat-error *ngIf="username.errors!['required']">
+                                    name="licencia"
+                                    [(ngModel)]="conductor.licencia"
+                                    #licencia="ngModel"
+                                    pattern="[0-9]*">
+                                    @if (licencia.invalid && (licencia.dirty || licencia.touched)) {
+                                        <mat-error *ngIf="licencia.errors!['required']">
                                             El campo es requerido
                                         </mat-error>
                                     }
-                                    @if (username.invalid && (username.dirty || username.touched)) {
-                                        <mat-error *ngIf="username.errors!['minlength']">
-                                            Minimo 6 caracteres
-                                        </mat-error>
-                                    }
-                                    </mat-form-field>
-                                    <mat-form-field>
-                                    <mat-label>Correo</mat-label>
-                                    <input 
-                                    matInput 
-                                    required
-                                    email
-                                    name="email"
-                                    type="email"
-                                    [(ngModel)]="usuario.email"
-                                    #email="ngModel">
-                                    @if (email.invalid && (email.dirty || email.touched)) {
-                                        <mat-error *ngIf="email.errors!['required']">
-                                            El campo es requerido
-                                        </mat-error>
-                                    }
-                                    @if (email.invalid && (email.dirty || email.touched)) {
-                                        <mat-error *ngIf="email.errors!['email']">
-                                            Ingrese un correo valido
+                                    @if (licencia.invalid && (licencia.dirty || licencia.touched)) {
+                                        <mat-error *ngIf="licencia.errors!['pattern']">
+                                            El campo solo acepta numeros
                                         </mat-error>
                                     }
                                     </mat-form-field>
 
                                     <mat-form-field>
-                                        <mat-label>Seleccione el rol</mat-label>
-                                        <mat-select
+                                    <mat-label>Descripcion</mat-label>
+                                    <input 
+                                    [readonly]="!isEditar"
+                                    matInput 
+                                    required
+                                    name="descripcion"
+                                    [(ngModel)]="conductor.descripcion"
+                                    #descripcion="ngModel">
+                                    @if (descripcion.invalid && (descripcion.dirty || descripcion.touched)) {
+                                        <mat-error *ngIf="descripcion.errors!['required']">
+                                            El campo es requerido
+                                        </mat-error>
+                                    }
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <mat-label>Fecha de contrato</mat-label>
+                                        <input 
+                                        matInput 
+                                        [matDatepicker]="dateContrato"
                                         required
-                                        name="rol"
-                                        [(ngModel)]="usuario.rol"
-                                        #rol="ngModel">
-                                          <mat-option value="ROLE_ADMIN">Administrador</mat-option>
-                                          <mat-option value="ROLE_USER">Usuario</mat-option>
-                                        </mat-select>
-                                      </mat-form-field>
+                                        [readonly]="!isEditar" 
+                                        name="fechaContrato"
+                                        [(ngModel)]="conductor.fechaContrato"
+                                        #fechaContrato="ngModel"
+                                        >
+                                        @if (fechaContrato.invalid && (fechaContrato.dirty || fechaContrato.touched)) {
+                                            <mat-error *ngIf="fechaContrato.errors!['required']">
+                                                El campo es requerido
+                                            </mat-error>
+                                        }
+                                        <mat-hint>MM/DD/YYYY</mat-hint>
+                                        <mat-datepicker-toggle [disabled]="!isEditar" matIconSuffix [for]="dateContrato"></mat-datepicker-toggle>
+                                        <mat-datepicker #dateContrato startView="year" [startAt]="startDate"></mat-datepicker>
+                                    </mat-form-field>
+
                                 </td>
-                            <td>
-                                    <app-upload-profile></app-upload-profile>
+                                <td>
+                                    <div class="profile-image-upload">
+                                        @if (conductor.profile) {
+                                            <img [src]="getImageSrc(conductor.profile)" class="profile-image" alt="perfil foto">
+                                        }@else{
+                                            <img src="assets/images/nonImg.jpg" alt="Vista previa de la imagen de perfil" class="profile-image">
+                                        }
+                                        
+                                        <input 
+                                        type="file" 
+                                        accept=".jpg,.png,.jpeg" 
+                                        (change)="onFileSelected($event)"
+                                        hidden
+                                        required
+                                        #fileInput>
+                                        
+                                        <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">
+                                        <mat-icon>upload</mat-icon> Subir Imagen
+                                        </button>
+                                       
+                                        
+                                    </div>
+                                    @if(saveProfileImg){
+                                        <button mat-raised-button color="warn" type="button" (click)="saveProfileImage(conductor.idConductor)" class="btn-update-img">
+                                            <mat-icon>save</mat-icon> Actualizar Imagen
+                                        </button>
+                                    }
                                 </td>
                             </tr>
                         </table>
@@ -224,20 +273,41 @@
                 </div>
             </div>
             <div class="botones-form">
-                <button type="button" class="boton" mat-stroked-button color="primary"
-                    (click)="limpiar(userForm)">
-                    Limpiar
-                </button>
-                <button 
-                class="boton" 
-                mat-flat-button 
-                color="primary" 
-                type="submit"
-                [disabled]="userForm.invalid">
-                    Enviar
-                </button>
+                @if(isEditar){
+                    <button 
+                    class="boton" 
+                    mat-flat-button 
+                    color="primary" 
+                    type="submit"
+                    [disabled]="conductorForm.invalid">
+                        Actualizar datos
+                    </button>
+                    <button 
+                    class="boton" 
+                    mat-flat-button 
+                    color="warn" 
+                    type="button"
+                    (click)="isEditar=false">
+                        Cancelar
+                    </button>
+                }@else {
+                    <button 
+                    class="boton" 
+                    mat-raised-button 
+                    color="accent" 
+                    type="button"
+                    (click)="isEditar=true">
+                        Editar datos
+                    </button>
+                }               
             </div>
         </form>
         
     </div>
+    <br>
+    <div class="content" [@slideInOut]="showDocs ? 'in' : 'out'">
+        <app-conductor-documentos [idConductor]="conductor.idConductor" ></app-conductor-documentos>
+    </div>
 </div>
+<br>
+<br>

@@ -1,0 +1,65 @@
+<!-- document-form.component.html -->
+<h2 class="titulo-form" mat-dialog-title>{{ isEditMode ? 'Editar Documento' : 'Nuevo Documento' }}</h2>
+<form [formGroup]="documentForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <!-- Tipo de Documento -->
+    <mat-form-field class="fields-form" appearance="fill">
+      <mat-label>Tipo de Documento</mat-label>
+      <mat-select formControlName="idDocumentoTipo" required>
+        <mat-option *ngFor="let tipo of documentTipos" [value]="tipo.idDocumentoTipo">
+          {{ tipo.nombreTipo }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Fecha de Vencimiento -->
+    <mat-form-field class="fields-form" appearance="fill">
+      <mat-label>Fecha de Vencimiento</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="fechaVencimiento"
+        required
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Estado del Documento -->
+    <mat-form-field class="fields-form" appearance="fill">
+        <mat-label>Estado del Documento</mat-label>
+        <mat-select formControlName="estadoDocumento" required>
+            <mat-option *ngFor="let estado of documentoEstados" [value]="estado">
+            {{ estado }}
+            </mat-option>
+        </mat-select>
+
+      <!-- <mat-label>Estado del Documento</mat-label>
+      <input matInput formControlName="estadoDocumento" required /> -->
+    </mat-form-field>
+
+    <!-- Archivo -->
+    <h3>Archivo</h3>
+    <div class="file-input-container">
+        
+        <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">
+        Seleccionar Archivo
+        </button>
+        <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
+        <input
+        type="file"
+        #fileInput
+        (change)="onFileChange($event)"
+        [required]="!isEditMode"
+        style="display: none;"
+        />
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button type="button" (click)="onCancel()">Cancelar</button>
+    <button mat-stroked-button color="primary" type="submit">
+      {{ isEditMode ? 'Actualizar' : 'Subir' }}
+    </button>
+  </mat-dialog-actions>
+</form>

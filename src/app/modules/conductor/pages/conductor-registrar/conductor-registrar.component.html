@@ -1,13 +1,13 @@
 <div class="main-container">
     <div class="header">
-        <h3><strong>REGISTRAR USUARIO</strong></h3>
-        <button mat-flat-button color="warn" routerLink="/admin/usuarios/">
+        <h3><strong>REGISTRAR CONDUCTOR</strong></h3>
+        <button mat-flat-button color="warn" routerLink="/admin/conductores/">
             Regresar
             <mat-icon aria-label="icono de retorno" fontIcon="keyboard_return icon"></mat-icon>
         </button>
     </div>
     <div class="content">
-        <form (ngSubmit)="onSubmit(userForm)" class="registrar-form" autocomplete="off" #userForm="ngForm">
+        <form (ngSubmit)="onSubmit(conductorForm)" class="registrar-form" autocomplete="off" #conductorForm="ngForm">
             <div class="datos-form">
                 <div class="datos-personales">
                     <h3 class="sub-title"><strong>Datos personales:</strong></h3>
@@ -21,7 +21,7 @@
                                     matInput
                                     required
                                     name="nombres"
-                                    [(ngModel)]="usuario.persona.nombres"
+                                    [(ngModel)]="conductor.nombres"
                                     #nombres="ngModel">
                                     @if (nombres.invalid && (nombres.dirty || nombres.touched)) {
                                         <mat-error *ngIf="nombres.errors!['required']">
@@ -37,7 +37,7 @@
                                     matInput 
                                     required
                                     name="paterno"
-                                    [(ngModel)]="usuario.persona.paterno"
+                                    [(ngModel)]="conductor.paterno"
                                     #paterno="ngModel">
                                     @if (paterno.invalid && (paterno.dirty || paterno.touched)) {
                                         <mat-error *ngIf="paterno.errors!['required']">
@@ -53,7 +53,7 @@
                                     matInput
                                     required
                                     name="materno"
-                                    [(ngModel)]="usuario.persona.materno"
+                                    [(ngModel)]="conductor.materno"
                                     #materno="ngModel">
                                     @if (materno.invalid && (materno.dirty || materno.touched)) {
                                         <mat-error *ngIf="materno.errors!['required']">
@@ -71,7 +71,7 @@
                                     matInput 
                                     required
                                     name="ci"
-                                    [(ngModel)]="usuario.persona.ci"
+                                    [(ngModel)]="conductor.ci"
                                     #ci="ngModel"
                                     pattern="[0-9]*">
                                     @if (ci.invalid && (ci.dirty || ci.touched)) {
@@ -94,7 +94,7 @@
                                     [matDatepicker]="picker"
                                     required
                                     name="fechaNac"
-                                    [(ngModel)]="usuario.persona.fechaNac"
+                                    [(ngModel)]="conductor.fechaNac"
                                     #fechaNac="ngModel"
                                     >
                                     @if (fechaNac.invalid && (fechaNac.dirty || fechaNac.touched)) {
@@ -115,7 +115,7 @@
                                     matInput 
                                     required 
                                     name="celular"
-                                    [(ngModel)]="usuario.persona.celular"
+                                    [(ngModel)]="conductor.celular"
                                     #celular="ngModel"
                                     pattern="[0-9]*">
                                     @if (celular.invalid && (celular.dirty || celular.touched)) {
@@ -138,7 +138,7 @@
                                         matInput 
                                         placeholder="Ex. 100 Main St"
                                         name="direccion"
-                                        [(ngModel)]="usuario.persona.direccion"
+                                        [(ngModel)]="conductor.direccion"
                                         #direccion="ngModel"
                                         required>
                                     </textarea>
@@ -155,65 +155,68 @@
                         </table>
                     </div>
                 </div>
-                <div class="datos-usuario">
-                    <h3 class="sub-title"><strong>Datos de usuario:</strong></h3>
+                <div class="datos-conductor">
+                    <h3 class="sub-title"><strong>Datos de conductor:</strong></h3>
                     <div>
                         <table cellspacing="5">
                             <tr class="row-form">
                                 <td class="column-form">
                                     <mat-form-field>
-                                    <mat-label>Nombre de usuario</mat-label>
+                                    <mat-label>Numero de Licencia</mat-label>
                                     <input 
                                     matInput 
                                     required
-                                    name="username"
-                                    [(ngModel)]="usuario.username"
-                                    #username="ngModel"
-                                    [minlength]="6">
-                                    @if (username.invalid && (username.dirty || username.touched)) {
-                                        <mat-error *ngIf="username.errors!['required']">
+                                    name="licencia"
+                                    [(ngModel)]="conductor.licencia"
+                                    #licencia="ngModel"
+                                    pattern="[0-9]*">
+                                    @if (licencia.invalid && (licencia.dirty || licencia.touched)) {
+                                        <mat-error *ngIf="licencia.errors!['required']">
                                             El campo es requerido
                                         </mat-error>
                                     }
-                                    @if (username.invalid && (username.dirty || username.touched)) {
-                                        <mat-error *ngIf="username.errors!['minlength']">
-                                            Minimo 6 caracteres
-                                        </mat-error>
-                                    }
-                                    </mat-form-field>
-                                    <mat-form-field>
-                                    <mat-label>Correo</mat-label>
-                                    <input 
-                                    matInput 
-                                    required
-                                    email
-                                    name="email"
-                                    type="email"
-                                    [(ngModel)]="usuario.email"
-                                    #email="ngModel">
-                                    @if (email.invalid && (email.dirty || email.touched)) {
-                                        <mat-error *ngIf="email.errors!['required']">
-                                            El campo es requerido
-                                        </mat-error>
-                                    }
-                                    @if (email.invalid && (email.dirty || email.touched)) {
-                                        <mat-error *ngIf="email.errors!['email']">
-                                            Ingrese un correo valido
+                                    @if (licencia.invalid && (licencia.dirty || licencia.touched)) {
+                                        <mat-error *ngIf="licencia.errors!['pattern']">
+                                            El campo solo acepta numeros
                                         </mat-error>
                                     }
                                     </mat-form-field>
 
                                     <mat-form-field>
-                                        <mat-label>Seleccione el rol</mat-label>
-                                        <mat-select
+                                    <mat-label>Descripcion</mat-label>
+                                    <input 
+                                    matInput 
+                                    required
+                                    name="descripcion"
+                                    [(ngModel)]="conductor.descripcion"
+                                    #descripcion="ngModel">
+                                    @if (descripcion.invalid && (descripcion.dirty || descripcion.touched)) {
+                                        <mat-error *ngIf="descripcion.errors!['required']">
+                                            El campo es requerido
+                                        </mat-error>
+                                    }
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <mat-label>Fecha de contrato</mat-label>
+                                        <input 
+                                        matInput 
+                                        [matDatepicker]="dateContrato"
                                         required
-                                        name="rol"
-                                        [(ngModel)]="usuario.rol"
-                                        #rol="ngModel">
-                                          <mat-option value="ROLE_ADMIN">Administrador</mat-option>
-                                          <mat-option value="ROLE_USER">Usuario</mat-option>
-                                        </mat-select>
-                                      </mat-form-field>
+                                        name="fechaContrato"
+                                        [(ngModel)]="conductor.fechaContrato"
+                                        #fechaContrato="ngModel"
+                                        >
+                                        @if (fechaContrato.invalid && (fechaContrato.dirty || fechaContrato.touched)) {
+                                            <mat-error *ngIf="fechaContrato.errors!['required']">
+                                                El campo es requerido
+                                            </mat-error>
+                                        }
+                                        <mat-hint>MM/DD/YYYY</mat-hint>
+                                        <mat-datepicker-toggle matIconSuffix [for]="dateContrato"></mat-datepicker-toggle>
+                                        <mat-datepicker #dateContrato startView="year" [startAt]="startDate"></mat-datepicker>
+                                    </mat-form-field>
+
                                 </td>
                             <td>
                                     <app-upload-profile></app-upload-profile>
@@ -225,7 +228,7 @@
             </div>
             <div class="botones-form">
                 <button type="button" class="boton" mat-stroked-button color="primary"
-                    (click)="limpiar(userForm)">
+                    (click)="limpiar(conductorForm)">
                     Limpiar
                 </button>
                 <button 
@@ -233,7 +236,7 @@
                 mat-flat-button 
                 color="primary" 
                 type="submit"
-                [disabled]="userForm.invalid">
+                [disabled]="conductorForm.invalid">
                     Enviar
                 </button>
             </div>

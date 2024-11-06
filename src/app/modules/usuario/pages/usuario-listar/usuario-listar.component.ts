@@ -86,7 +86,6 @@ export class UsuarioListarComponent implements OnInit {
       next: (data: PageResponse<UsuarioListarResponse>) => {
         this.dataSource.data = data.content;
         this.totalUsuarios = data.totalElements;
-        // console.log(data);
       },
       error: (error) => {
         Swal.fire('Error', 'Error al cargar los usuarios', 'error');
