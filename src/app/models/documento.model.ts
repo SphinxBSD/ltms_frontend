@@ -8,5 +8,7 @@ export interface Documento {
     idEntidad: number;
     tipoEntidad: 'CONDUCTOR' | 'VEHICULO';
     rutaArchivo: string;
+
+    dominio?: string;
   }
   

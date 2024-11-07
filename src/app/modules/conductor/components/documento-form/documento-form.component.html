@@ -48,6 +48,7 @@
         </button>
         <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
         <input
+        accept=".pdf, .doc, .docx, .xls, .xlsx"
         type="file"
         #fileInput
         (change)="onFileChange($event)"

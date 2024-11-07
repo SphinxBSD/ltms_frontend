@@ -1,12 +1,17 @@
 <!-- document-list.component.html -->
 <div class="document-list">
     <h2>Documentos del Conductor</h2>
-    <button mat-raised-button color="primary" (click)="openCreateDialog()">
-      Nuevo Documento
-    </button>
-    <br>
-    <br>
-    <table mat-table [dataSource]="documents" class="mat-elevation-z8">
+    <div class="opciones-list">
+      <button mat-raised-button color="primary" (click)="openCreateDialog()">
+        Nuevo Documento
+      </button>
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrar estado o dominio</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. CHILE" #input>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   
       <!-- ID Column -->
       <ng-container matColumnDef="id">
@@ -30,6 +35,12 @@
       <ng-container matColumnDef="fechaVencimiento">
         <th mat-header-cell *matHeaderCellDef> Fecha Vencimiento </th>
         <td mat-cell *matCellDef="let doc"> {{ doc.fechaVencimiento | date }} </td>
+      </ng-container>
+
+      <!-- Dominio Documento Column -->
+      <ng-container matColumnDef="dominio">
+        <th mat-header-cell *matHeaderCellDef> Dominio </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.dominio }} </td>
       </ng-container>
   
       <!-- Estado Column -->

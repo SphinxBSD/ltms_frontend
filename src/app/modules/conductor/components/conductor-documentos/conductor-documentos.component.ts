@@ -8,9 +8,11 @@ import { DocumentoService } from '../../../../core/services/documento.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentoFormComponent } from '../documento-form/documento-form.component';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-conductor-documentos',
@@ -19,7 +21,9 @@ import Swal from 'sweetalert2';
     MatIconModule,
     CommonModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './conductor-documentos.component.html',
   styleUrl: './conductor-documentos.component.css'
@@ -27,7 +31,8 @@ import Swal from 'sweetalert2';
 export class ConductorDocumentosComponent implements OnChanges {
   @Input() idConductor: number = 0;
 
-  displayedColumns: string[] = ['id', 'tipoDocumento', 'descripcion', 'fechaVencimiento', 'estado', 'acciones'];
+  dataSource = new MatTableDataSource<Documento>();
+  displayedColumns: string[] = ['id', 'tipoDocumento', 'descripcion', 'fechaVencimiento', 'dominio', 'estado', 'acciones'];
   documents: Documento[] = [];
   documentsTipos: DocumentoTipo[] = [];
 
@@ -54,12 +59,21 @@ export class ConductorDocumentosComponent implements OnChanges {
       {
         next: (docs) => {
           this.documents = docs;
+          this.documents.forEach((doc) => {
+            doc.dominio = this.getTipoDocumentoDominio(doc.idDocumentoTipo);
+          });
+          this.dataSource.data = this.documents;
         },
         error: (error) => {
           console.error('Error fetching documents', error);
         }
       }
     );
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   openCreateDialog() {
@@ -159,5 +173,9 @@ export class ConductorDocumentosComponent implements OnChanges {
 
   getTipoDocumentoDescripcion(idTipo: number): string {
     return this.documentsTipos.find((tipo) => tipo.idDocumentoTipo === idTipo)?.descripcion || 'Desconocido';
+  }
+
+  getTipoDocumentoDominio(idTipo: number): string {
+    return this.documentsTipos.find((tipo) => tipo.idDocumentoTipo === idTipo)?.dominio || 'Desconocido';
   }
 }
