@@ -1,0 +1,86 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+  }
+  
+  .content {
+    margin: 0px 10px;
+    padding: 10px;
+    background: linear-gradient(90deg, #FDD086, #FDC872);
+    border-radius: 10px;
+  }
+  
+  .sub-title {
+    color: var(--text-color2);
+    background: var(--primary-color);
+    border-radius: 10px;
+    padding: 5px 20px;
+    font-size: large;
+  }
+    
+  .registrar-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .datos-form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+  }
+  
+  .row-form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin: 5px 0;
+  }
+  
+  .botones-form {
+    display: flex;
+    flex-flow: row wrap;
+    align-self: flex-end;
+  }
+  
+  .column-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .boton{
+    margin: 5px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+
+  /* IMAGENES */
+
+  .image-upload-section {
+    margin-top: 5px;
+  }
+  
+  .upload-button {
+    margin-bottom: 5px;
+  }
+  
+  .image-card {
+    position: relative;
+  }
+  
+  .image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .mat-card-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+  }

@@ -1,1 +1,244 @@
-<p>vehiculo-informacion works!</p>
+<div class="main-container">
+    <div class="header">
+        <h3><strong>INFORMACION DEL VEHICULO</strong></h3>
+        <button mat-flat-button color="warn" routerLink="/admin/vehiculos/">
+            Regresar
+            <mat-icon aria-label="icono de retorno" fontIcon="keyboard_return icon"></mat-icon>
+        </button>
+    </div>
+    <div class="content">
+        <form (ngSubmit)="onSubmit(vehiculoForm)" class="registrar-form" autocomplete="off" #vehiculoForm="ngForm">
+            <div class="datos-form">
+                <div class="datos-personales">
+                    <h3 class="sub-title"><strong>Datos del vehiculo:</strong></h3>
+                    <div>
+                        <table cellspacing="4">
+                            <tr class="row-form">
+                                <td>
+                                    <mat-form-field>
+                                    <mat-label>Nro. Placa</mat-label>
+                                    <input
+                                    [readonly]="!isEditar"
+                                    matInput
+                                    required
+                                    name="placa"
+                                    [(ngModel)]="vehiculo.placa"
+                                    #placa="ngModel">
+                                    @if (placa.invalid && (placa.dirty || placa.touched)) {
+                                        <mat-error *ngIf="placa.errors!['required']">
+                                            El campo es requerido
+                                        </mat-error>
+                                    }
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                    <mat-label>Marca</mat-label>
+                                    <input
+                                    [readonly]="!isEditar"
+                                    matInput 
+                                    required
+                                    name="marca"
+                                    [(ngModel)]="vehiculo.marca"
+                                    #marca="ngModel">
+                                    @if (marca.invalid && (marca.dirty || marca.touched)) {
+                                        <mat-error *ngIf="marca.errors!['required']">
+                                            El campo es requerido
+                                        </mat-error>
+                                    }
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                    <mat-label>Modelo</mat-label>
+                                    <input
+                                    [readonly]="!isEditar"
+                                    matInput
+                                    required
+                                    name="modelo"
+                                    [(ngModel)]="vehiculo.modelo"
+                                    #modelo="ngModel">
+                                    @if (modelo.invalid && (modelo.dirty || modelo.touched)) {
+                                        <mat-error *ngIf="modelo.errors!['required']">
+                                            El campo es requerido
+                                        </mat-error>
+                                    }
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Procedencia</mat-label>
+                                        <input
+                                        [readonly]="!isEditar"
+                                        matInput
+                                        required
+                                        name="procedencia"
+                                        [(ngModel)]="vehiculo.procedencia"
+                                        #procedencia="ngModel">
+                                        @if (modelo.invalid && (procedencia.dirty || procedencia.touched)) {
+                                            <mat-error *ngIf="procedencia.errors!['required']">
+                                                El campo es requerido
+                                            </mat-error>
+                                        }
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr class="row-form">
+                                <td>
+                                    <!-- Estado del Vehiculo -->
+                                    <mat-form-field class="fields-form" appearance="fill">
+                                        <mat-label>Tipo</mat-label>
+                                        <mat-select
+                                        [disabled]="!isEditar"
+                                        required
+                                        name="tipo"
+                                        [(ngModel)]="vehiculo.tipo"
+                                        #tipo="ngModel">
+                                            <mat-option *ngFor="let tipo of vehiculoTipos" [value]="tipo">
+                                            {{ tipo }}
+                                            </mat-option>
+                                        </mat-select>
+                                        @if (tipo.invalid && (tipo.dirty || tipo.touched)) {
+                                            <mat-error *ngIf="tipo.errors!['required']">
+                                                El campo es requerido
+                                            </mat-error>
+                                        }
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Año</mat-label>
+                                        <input
+                                        [readonly]="!isEditar"
+                                        type="tel"
+                                        matInput 
+                                        required 
+                                        name="anio"
+                                        [(ngModel)]="vehiculo.anio"
+                                        #anio="ngModel"
+                                        pattern="[0-9]*">
+                                        @if (anio.invalid && (anio.dirty || anio.touched)) {
+                                            <mat-error *ngIf="anio.errors!['required']">
+                                                El campo es requerido
+                                            </mat-error>
+                                        }
+                                        @if (anio.invalid && (anio.dirty || anio.touched)) {
+                                            <mat-error *ngIf="anio.errors!['pattern']">
+                                                El campo solo acepta numeros
+                                            </mat-error>
+                                        }
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                    <mat-label>Nro Serie</mat-label>
+                                    <input
+                                    [readonly]="!isEditar"
+                                    type="tel"
+                                    matInput 
+                                    required 
+                                    name="numeroSerie"
+                                    [(ngModel)]="vehiculo.numeroSerie"
+                                    #numeroSerie="ngModel">
+                                    @if (numeroSerie.invalid && (numeroSerie.dirty || numeroSerie.touched)) {
+                                        <mat-error *ngIf="numeroSerie.errors!['required']">
+                                            El campo es requerido
+                                        </mat-error>
+                                    }
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <!-- Estado del Vehiculo -->
+                                    <mat-form-field class="fields-form" appearance="fill">
+                                        <mat-label>Estado</mat-label>
+                                        <mat-select
+                                        [disabled]="!isEditar"
+                                        required
+                                        name="estado"
+                                        [(ngModel)]="vehiculo.estado"
+                                        #estado="ngModel">
+                                            <mat-option *ngFor="let estado of vehiculoEstados" [value]="estado">
+                                            {{ estado }}
+                                            </mat-option>
+                                        </mat-select>
+                                        @if (estado.invalid && (estado.dirty || estado.touched)) {
+                                            <mat-error *ngIf="estado.errors!['required']">
+                                                El campo es requerido
+                                            </mat-error>
+                                        }
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr class="row-form">
+                                <div class="botones-form">
+                                    @if(isEditar){
+                                        <button 
+                                        class="boton" 
+                                        mat-flat-button 
+                                        color="primary" 
+                                        type="submit"
+                                        [disabled]="vehiculoForm.invalid">
+                                            Actualizar datos
+                                        </button>
+                                        <button 
+                                        class="boton" 
+                                        mat-flat-button 
+                                        color="warn" 
+                                        type="button"
+                                        (click)="isEditar=false">
+                                            Cancelar
+                                        </button>
+                                    }@else {
+                                        <button 
+                                        class="boton" 
+                                        mat-raised-button 
+                                        color="accent" 
+                                        type="button"
+                                        (click)="isEditar=true">
+                                            Editar datos
+                                        </button>
+                                    }               
+                                </div>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="datos-vehiculos">
+                    <h3 class="sub-title"><strong>Imágenes del Vehículo:</strong></h3>
+                    <div class="imagenes-grid">
+                        <mat-card *ngFor="let imagen of imagenesUrl">
+                          <img mat-card-image [src]="imagen.url" alt="Imagen del vehículo" />
+                          <mat-card-actions>
+                            <button
+                              mat-icon-button
+                              color="warn"
+                              (click)="eliminarImagen(imagen.nombre)"
+                            >
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                          </mat-card-actions>
+                        </mat-card>
+                      </div>
+                      
+                      <!-- Botón para subir nueva imagen -->
+                      <div class="image-upload-section">
+                        <!-- Botón para subir imágenes -->
+                        <div class="upload-button">
+                          <input 
+                            type="file" 
+                            accept=".jpg,.png,.jpeg" 
+                            (change)="subirNuevaImagen($event)" 
+                            hidden
+                            multiple
+                            #fileInput>
+                          <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
+                            <mat-icon>upload</mat-icon> Subir Imágenes
+                          </button>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+</div>

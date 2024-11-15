@@ -1,1 +1,75 @@
-<p>vehiculo-listar works!</p>
+<div class="main-container">
+    <div class="header">
+        <h3><strong>LISTA DE VEHICULOS</strong></h3>
+        <button mat-flat-button color="primary" routerLink="/admin/vehiculos/registrar">
+            Registrar vehiculo
+            <mat-icon aria-label="Example home icon" fontIcon="person add icon"></mat-icon>
+        </button>
+    </div>
+    <div class="content">
+        <!-- vehiculo-table.component.html -->
+        <div class="table-container">
+            <mat-form-field appearance="fill">
+            <mat-label>Buscar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre">
+            </mat-form-field>
+        
+            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+            <!-- Placa Column -->
+            <ng-container  matColumnDef="placa">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Placa</th>
+                <td mat-cell *matCellDef="let vehiculo">{{ vehiculo.placa }}</td>
+            </ng-container>
+
+            <!-- Marca Column -->
+            <ng-container  matColumnDef="marca">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Marca</th>
+                <td mat-cell *matCellDef="let vehiculo">{{ vehiculo.marca }}</td>
+            </ng-container>
+
+            <!-- Modelo Column -->
+            <ng-container  matColumnDef="modelo">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Modelo</th>
+                <td mat-cell *matCellDef="let vehiculo">{{ vehiculo.modelo }}</td>
+            </ng-container>
+        
+            <!-- Anio Column -->
+            <ng-container matColumnDef="anio">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Año</th>
+                <td mat-cell *matCellDef="let vehiculo">{{ vehiculo.anio }}</td>
+            </ng-container>
+        
+            
+            <!-- Estado Column -->
+            <ng-container matColumnDef="estado">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Estado</th>
+                <td mat-cell *matCellDef="let vehiculo">{{ vehiculo.estado }}</td>
+            </ng-container>
+
+            <!-- Acciones Column -->
+             <ng-container matColumnDef="acciones">
+                <th class="table-header" *matHeaderCellDef mat-sort-header>Acciones</th>
+                <td mat-cell *matCellDef="let vehiculo">
+                    <button mat-stroked-button color="primary" (click)="verInfoVehiculo(vehiculo.id)">
+                        Ver info
+                        <mat-icon aria-label="Information icon" fontIcon="info icon"></mat-icon>
+                    </button>
+                    <button mat-flat-button color="warn" routerLink="/admin/conductores/informacion">
+                        Eliminar
+                        <mat-icon aria-label="Information icon" fontIcon="delete icon"></mat-icon>
+                    </button>
+                </td>
+             </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        
+            <mat-paginator [length]="totalElements"
+                        [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, 20, 50]"
+                        (page)="onPaginateChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

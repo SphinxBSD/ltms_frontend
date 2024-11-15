@@ -58,8 +58,8 @@ export class ConductorRegistrarComponent {
       condutorForm.value.fechaNac = moment.default(condutorForm.value.fechaNac).format('YYYY-MM-DD');
       condutorForm.value.fechaContrato = moment.default(condutorForm.value.fechaContrato).format('YYYY-MM-DD');
       if (this.profileImage.selectedFile) {
-        console.log('Registrando conductor');
-        console.log(condutorForm.value);
+        // console.log('Registrando conductor');
+        // console.log(condutorForm.value);
         this.conductorService.registrarConductor(condutorForm, this.profileImage.selectedFile).subscribe({
           next: (response) => {
             Swal.fire({
