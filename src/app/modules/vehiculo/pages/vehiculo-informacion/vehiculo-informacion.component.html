@@ -1,10 +1,20 @@
 <div class="main-container">
     <div class="header">
         <h3><strong>INFORMACION DEL VEHICULO</strong></h3>
-        <button mat-flat-button color="warn" routerLink="/admin/vehiculos/">
-            Regresar
-            <mat-icon aria-label="icono de retorno" fontIcon="keyboard_return icon"></mat-icon>
-        </button>
+        <div>
+            <button mat-raised-button color="accent" type="button" (click)="mostrarCarroceria()">
+                {{showCarroceria ? 'Ocultar' : 'Ver Carroceria'}}
+                <mat-icon aria-label="icono de ver documentos" fontIcon="view_array icon"></mat-icon>
+            </button>
+            <button mat-raised-button color="primary" type="button" (click)="mostrarDocumentos()">
+                {{showDocs ? 'Ocultar' : 'Ver Documentos'}}
+                <mat-icon aria-label="icono de ver documentos" fontIcon="folder_shared icon"></mat-icon>
+            </button>
+            <button mat-flat-button color="warn" routerLink="/admin/vehiculos/">
+                Regresar
+                <mat-icon aria-label="icono de retorno" fontIcon="keyboard_return icon"></mat-icon>
+            </button>
+        </div>
     </div>
     <div class="content">
         <form (ngSubmit)="onSubmit(vehiculoForm)" class="registrar-form" autocomplete="off" #vehiculoForm="ngForm">
@@ -238,7 +248,16 @@
                       </div>
                 </div>
             </div>
-        </form>
-        
+        </form>     
+    </div>
+    <br>
+    <div *ngIf="showDocs" class="content" @animacionHijo>
+        <app-vehiculo-documentos [idVehiculo]="vehiculo.idVehiculo" ></app-vehiculo-documentos>
+    </div>
+    
+    <div *ngIf="showCarroceria" class="content" @animacionHijo>
+        <app-carroceria [idVehiculo]="vehiculo.idVehiculo" ></app-carroceria>
     </div>
 </div>
+<br>
+<br>

@@ -1,0 +1,212 @@
+<div class="main-container">
+    <div class="header">
+        <h3><strong>INFORMACION DE LA CARROCERIA</strong></h3>
+    </div>
+    <div class="content">
+        <form (ngSubmit)="onSubmit(carroceriaForm)" class="registrar-form" autocomplete="off" #carroceriaForm="ngForm">
+            <div class="datos-form">
+                <div class="datos-personales">
+                    <h3 class="sub-title"><strong>Datos de la carroceria:</strong></h3>
+                    <div>
+                        <table cellspacing="4">
+                            <tr class="row-form">
+                                <td>
+                                    <mat-form-field>
+                                    <mat-label>Codigo de tanque</mat-label>
+                                    <input
+                                    [readonly]="!isEditar"
+                                    matInput
+                                    required
+                                    name="codigo"
+                                    [(ngModel)]="carroceria.codigo"
+                                    #codigo="ngModel">
+                                    @if (codigo.invalid && (codigo.dirty || codigo.touched)) {
+                                        <mat-error *ngIf="codigo.errors!['required']">
+                                            El campo es requerido
+                                        </mat-error>
+                                    }
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                    <mat-label>Capacidad (Litros)</mat-label>
+                                    <input
+                                    [readonly]="!isEditar"
+                                    matInput 
+                                    required
+                                    name="capacidad"
+                                    [(ngModel)]="carroceria.capacidad"
+                                    #capacidad="ngModel"
+                                    pattern="[0-9]*">
+                                    @if (capacidad.invalid && (capacidad.dirty || capacidad.touched)) {
+                                        <mat-error *ngIf="capacidad.errors!['required']">
+                                            El campo es requerido
+                                        </mat-error>
+                                    }
+                                    @if (capacidad.invalid && (capacidad.dirty || capacidad.touched)) {
+                                        <mat-error *ngIf="capacidad.errors!['pattern']">
+                                            El campo solo acepta numeros
+                                        </mat-error>
+                                    }
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Fecha Fab.</mat-label>
+                                        <input 
+                                        matInput 
+                                        [matDatepicker]="dateFab"
+                                        required
+                                        name="anioFab"
+                                        [(ngModel)]="carroceria.anioFab"
+                                        #anioFab="ngModel"
+                                        >
+                                        @if (anioFab.invalid && (anioFab.dirty || anioFab.touched)) {
+                                            <mat-error *ngIf="anioFab.errors!['required']">
+                                                El campo es requerido
+                                            </mat-error>
+                                        }
+                                        <mat-hint>MM/DD/YYYY</mat-hint>
+                                        <mat-datepicker-toggle matIconSuffix [for]="dateFab"></mat-datepicker-toggle>
+                                        <mat-datepicker #dateFab startView="year" [startAt]="startDate"></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <!-- Estado del Vehiculo -->
+                                    <mat-form-field class="fields-form" appearance="fill">
+                                        <mat-label>Tipo</mat-label>
+                                        <mat-select
+                                        [disabled]="!isEditar"
+                                        required
+                                        name="tipo"
+                                        [(ngModel)]="carroceria.tipo"
+                                        #tipo="ngModel">
+                                            <mat-option *ngFor="let tipo of carroceriaTipos" [value]="tipo">
+                                            {{ tipo }}
+                                            </mat-option>
+                                        </mat-select>
+                                        @if (tipo.invalid && (tipo.dirty || tipo.touched)) {
+                                            <mat-error *ngIf="tipo.errors!['required']">
+                                                El campo es requerido
+                                            </mat-error>
+                                        }
+                                    </mat-form-field>
+                                </td>
+                                
+                            </tr>
+                            <tr class="row-form">
+                                <div class="botones-form">
+                                    @if(isEditar){
+                                        <button 
+                                        class="boton" 
+                                        mat-flat-button 
+                                        color="primary" 
+                                        type="submit"
+                                        [disabled]="carroceriaForm.invalid">
+                                            Actualizar datos
+                                        </button>
+                                        <button 
+                                        class="boton" 
+                                        mat-flat-button 
+                                        color="warn" 
+                                        type="button"
+                                        (click)="isEditar=false">
+                                            Cancelar
+                                        </button>
+                                    }@else {
+                                        <button 
+                                        class="boton" 
+                                        mat-raised-button 
+                                        color="accent" 
+                                        type="button"
+                                        (click)="isEditar=true">
+                                            Editar datos
+                                        </button>
+                                    }               
+                                </div>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="datos-conductor">
+                    <h3 class="sub-title"><strong>Imágenes de la carroceria:</strong></h3>
+                    @if (carroceria.imagenes) {
+                        <div class="imagenes-grid">
+                            <mat-card *ngFor="let imagen of imagenesUrl">
+                              <img mat-card-image [src]="imagen.url" alt="Imagen del vehículo" />
+                              <mat-card-actions class="mat-card-actions-info">
+                                <button
+                                  mat-icon-button
+                                  color="warn"
+                                  (click)="eliminarImagenA(imagen.nombre)"
+                                >
+                                  <mat-icon>delete</mat-icon>
+                                </button>
+                              </mat-card-actions>
+                            </mat-card>
+                          </div>
+                          
+                          <!-- Botón para subir nueva imagen -->
+                          <div class="image-upload-section">
+                            <!-- Botón para subir imágenes -->
+                            <div class="upload-button">
+                              <input 
+                                type="file" 
+                                accept=".jpg,.png,.jpeg" 
+                                (change)="subirNuevaImagenA($event)" 
+                                hidden
+                                multiple
+                                #fileInput>
+                              <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
+                                <mat-icon>upload</mat-icon> Subir Imágenes
+                              </button>
+                            </div>
+                          </div>
+                    }@else {
+                        <div>
+                            <table cellspacing="2">
+                                <tr class="row-form">
+                                    <td colspan="3">
+                                        <div class="image-upload-section">
+                                          <!-- Botón para subir imágenes -->
+                                          <div class="upload-button">
+                                            <input 
+                                              type="file" 
+                                              accept=".jpg,.png,.jpeg" 
+                                              (change)="onFileChange($event)" 
+                                              hidden
+                                              multiple
+                                              #fileInput>
+                                            <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
+                                              <mat-icon>upload</mat-icon> Subir Imágenes
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- Visualización de las imágenes subidas -->
+                        <mat-grid-list cols="3" rowHeight="150px" *ngIf="imagenesPreview.length > 0">
+                            <mat-grid-tile *ngFor="let img of imagenesPreview; let i = index">
+                              <mat-card class="image-card">
+                                <img mat-card-image [src]="img" alt="Imagen del vehículo">
+                                <mat-card-actions class="mat-card-actions">
+                                  <button mat-icon-button color="warn" (click)="eliminarImagenR(i)">
+                                    <mat-icon>delete</mat-icon>
+                                  </button>
+                                </mat-card-actions>
+                              </mat-card>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    }
+                    
+                </div>
+
+            </div>
+        </form>     
+    </div>
+</div>
+<br>
+<br>

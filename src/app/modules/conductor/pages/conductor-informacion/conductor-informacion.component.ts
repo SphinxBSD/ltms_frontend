@@ -39,15 +39,15 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ConductorDocumentosComponent
   ],
   animations: [
-    trigger('slideInOut', [
-      state('in', style({
-        height: '*', opacity: 1
-      })),
-      state('out', style({
-        height: '0px', opacity: 0
-      })),
-      transition('in <=> out', animate('300ms ease-in-out'))
-    ])
+    trigger('animacionHijo', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({ opacity: 0, transform: 'translateY(-20px)' })),
+      ]),
+    ]),
   ],
   templateUrl: './conductor-informacion.component.html',
   styleUrl: './conductor-informacion.component.css'
@@ -61,6 +61,9 @@ export class ConductorInformacionComponent implements OnInit{
   isEditar: boolean = false;
   showDocs: boolean = false;
 
+  dia1: Date = new Date();
+  dia2: Date = new Date();
+
   conductor: Conductor = new Conductor();
   readonly startDate = new Date(1990, 0, 1);
 
@@ -73,7 +76,15 @@ export class ConductorInformacionComponent implements OnInit{
     const idConductor = this.route.snapshot.paramMap.get('idConductor');
     this.conductorService.getConductorById(Number(idConductor)).subscribe(
       response => {
-        this.conductor = response;
+          this.conductor = response;
+          this.dia1 =  new Date(response.fechaNac);
+          this.dia2 =  new Date(response.fechaContrato);
+
+          this.dia1 = new Date( this.dia1.setDate(this.dia1.getDate() +1));
+          this.dia2 = new Date( this.dia2.setDate(this.dia2.getDate() +1));
+
+          this.conductor.fechaNac = this.dia1;
+          this.conductor.fechaContrato = this.dia2;
       });
   }
 

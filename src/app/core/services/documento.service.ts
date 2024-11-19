@@ -21,6 +21,12 @@ export class DocumentoService {
     );
   }
 
+  getDocumentsByVehiculo(idConductor: number): Observable<Documento[]> {
+    return this.http.get<Documento[]>(
+      `${this.apiUrl}/entidad/${idConductor}?tipoEntidad=VEHICULO`
+    );
+  }
+
   createDocument(formData: FormData): Observable<Documento> {
     return this.http.post<Documento>(this.apiUrl + '/create', formData);
   }

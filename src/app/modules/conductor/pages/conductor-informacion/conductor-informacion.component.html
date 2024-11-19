@@ -305,7 +305,7 @@
         
     </div>
     <br>
-    <div class="content" [@slideInOut]="showDocs ? 'in' : 'out'">
+    <div *ngIf="showDocs" class="content" @animacionHijo>
         <app-conductor-documentos [idConductor]="conductor.idConductor" ></app-conductor-documentos>
     </div>
 </div>

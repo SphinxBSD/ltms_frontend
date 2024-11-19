@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
@@ -16,10 +16,13 @@ import {MatDividerModule} from '@angular/material/divider';
 
 import { Vehiculo } from '../../../../models/vehiculo.model';
 import { VehiculoService } from '../../../../core/services/vehiculo.service';
+import { VehiculoDocumentosComponent } from '../../components/vehiculo-documentos/vehiculo-documentos.component';
+import { CarroceriaComponent } from '../../components/carroceria/carroceria.component';
 
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import Swal from 'sweetalert2';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-vehiculo-informacion',
@@ -37,7 +40,20 @@ import Swal from 'sweetalert2';
     RouterModule,
     MatCardModule,
     MatGridListModule,
-    MatDividerModule
+    MatDividerModule,
+    VehiculoDocumentosComponent,
+    CarroceriaComponent
+  ],
+  animations: [
+    trigger('animacionHijo', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({ opacity: 0, transform: 'translateY(-20px)' })),
+      ]),
+    ]),
   ],
   templateUrl: './vehiculo-informacion.component.html',
   styleUrl: './vehiculo-informacion.component.css'
@@ -50,6 +66,9 @@ export class VehiculoInformacionComponent implements OnInit {
   vehiculoTipos: string[] = ['CAMION', 'FURGONETA', 'REMOLQUE', 'CISTERNA', 'CAMIONETA'];
 
   isEditar: boolean = false;
+  showDocs: boolean = false;
+  showCarroceria: boolean = false;
+
   imagenesUrl: { nombre: string; url: SafeUrl }[] = [];
 
   constructor(
@@ -206,5 +225,13 @@ export class VehiculoInformacionComponent implements OnInit {
     //     },
     //   });
     // }
+  }
+
+  mostrarDocumentos(): void {
+    this.showDocs = !this.showDocs;
+  }
+
+  mostrarCarroceria(): void {
+    this.showCarroceria = !this.showCarroceria;
   }
 }
