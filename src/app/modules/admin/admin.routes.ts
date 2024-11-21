@@ -25,6 +25,17 @@ export const adminRoutes: Routes = [
                 path: 'vehiculos',
                 loadChildren: () => import('../vehiculo/vehiculo.routes').then(m => m.vehiculoRoutes),
                 title: 'App - Vehiculos'
+            },
+            {
+                path: 'parametros',
+                loadChildren: () => import('../parametros/parametros.routes').then(m => m.parametrosRoutes),
+                title: 'App - Parametros'
+
+            },
+            {
+                path: 'unidades-transporte',
+                loadChildren: () => import('../unidad-transporte/unidad-transporte.routes').then(m => m.unidadTransporteRoutes),
+                title: 'App - Unidades de Transporte'
             }
         ]
     }

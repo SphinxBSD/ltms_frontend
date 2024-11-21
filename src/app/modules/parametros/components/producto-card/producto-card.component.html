@@ -1,0 +1,40 @@
+<mat-card class="content">
+    <mat-card-title>PRODUCTOS INFO</mat-card-title>
+    <br>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let producto of productos">
+          <form #productoForm="ngForm">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre</mat-label>
+              <input matInput placeholder="Nombre" [(ngModel)]="producto.nombre" name="nombre" required [readonly]="!producto.edit">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Proveedor</mat-label>
+              <input matInput placeholder="Proveedor" [(ngModel)]="producto.proveedor" name="proveedor" required [readonly]="!producto.edit">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Rubro</mat-label>
+              <input matInput placeholder="Rubro" [(ngModel)]="producto.rubro" name="rubro" required [readonly]="!producto.edit">
+            </mat-form-field>
+            @if (producto.edit) {
+              <button [disabled]="productoForm.invalid" mat-mini-fab color="primary" aria-label="Boton guardar" (click)="toggleEdit(producto)">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-mini-fab color="warn" aria-label="Boton eliminar" (click)="producto.edit=!producto.edit">
+                <mat-icon>close</mat-icon>
+              </button>
+            }@else {
+              <button mat-mini-fab color="primary" (click)="toggleEdit(producto)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+            <button mat-mini-fab color="warn" (click)="eliminarProducto(producto)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </form>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+  

@@ -1,0 +1,17 @@
+.parametros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  app-rutas, app-productos, app-plantas {
+    flex: 1 1 calc(33.333% - 16px);
+    max-width: 300px;
+  }
+
+  @media (max-width: 768px) {
+    app-rutas, app-productos, app-plantas {
+      flex: 1 1 100%;
+    }
+  }

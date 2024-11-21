@@ -1,0 +1,43 @@
+<mat-card class="content">
+  <mat-card-title>RUTAS INFO</mat-card-title>
+  <br>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let ruta of rutas">
+        <form #rutaForm="ngForm">
+          <mat-form-field appearance="fill">
+            <mat-label>Origen</mat-label>
+            <input matInput placeholder="Origen" [(ngModel)]="ruta.origen" name="origen" required [readonly]="!ruta.edit">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Frontera</mat-label>
+            <input matInput placeholder="Frontera" [(ngModel)]="ruta.frontera" name="frontera" required [readonly]="!ruta.edit">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Destino</mat-label>
+            <input matInput placeholder="Destino" [(ngModel)]="ruta.destino" name="destino" required [readonly]="!ruta.edit">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Distancia</mat-label>
+            <input matInput placeholder="Distancia" [(ngModel)]="ruta.distancia" name="distancia" type="number" required [readonly]="!ruta.edit">
+          </mat-form-field>
+          @if (ruta.edit) {
+            <button [disabled]="rutaForm.invalid" mat-mini-fab color="primary" aria-label="Boton guardar" (click)="toggleEdit(ruta)">
+              <mat-icon>save</mat-icon>
+            </button>
+            <button mat-mini-fab color="warn" aria-label="Boton eliminar" (click)="ruta.edit=!ruta.edit">
+              <mat-icon>close</mat-icon>
+            </button>
+          }@else {
+            <button mat-mini-fab color="primary" (click)="toggleEdit(ruta)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+          <button mat-mini-fab color="warn" (click)="eliminarRuta(ruta)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </form>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
